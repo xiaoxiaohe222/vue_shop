@@ -1,12 +1,10 @@
 <template>
   <div id="app">
-    我是APP组件
-
+   <router-view></router-view>
   </div>
 </template>
 
 <script>
-
 
 export default {
   name: 'App',
@@ -14,6 +12,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="stylus" rel="stylesheet/stylus">
 
 </style>

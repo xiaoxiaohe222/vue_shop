@@ -1,5 +1,6 @@
 
 
 export default {
-    token:""  //用户的身份信息
+    token:"" , //用户的身份信息
+    username:""
 }

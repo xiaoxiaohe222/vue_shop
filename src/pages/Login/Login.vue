@@ -33,7 +33,7 @@
 
 <script>
 import {Form, FormItem, Input ,Message} from "element-ui"
-import {SAVE_TOKEN} from "@/vuex/mutations_type";
+import {SAVE_TOKEN, SAVE_USERNAME} from "@/vuex/mutations_type";
 
 export default {
   name: "Login",
@@ -76,6 +76,7 @@ export default {
             //说明登录成功
             Message.success("登录成功")
             this.$store.commit(SAVE_TOKEN,result.data.token)
+            this.$store.commit(SAVE_USERNAME,result.data.username)
             localStorage.setItem("token",result.data.token)
             this.$router.replace("/home")
           }else {

@@ -1,7 +1,13 @@
 import VueRouter from 'vue-router'
 import Vue from "vue"
-import Home from "@/pages/Home";
+import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login/Login";
+import Welcome from "@/pages/Home/Welcome/Welcome";
+import Users from "@/pages/Home/Users/Users";
+import Roles from "@/pages/Home/Roles/Roles";
+
+
+
 import store from "@/vuex/store";
 
 Vue.use(VueRouter)
@@ -10,7 +16,13 @@ Vue.use(VueRouter)
 let router = new VueRouter({
     mode:'history',
     routes: [
-        { name: "home",path: "/home", component: Home },
+        { name: "home",path: "/home", component: Home,redirect: "/home/welcome",
+            children:[
+                { path:"welcome", component:Welcome },
+                { path:"users", component:Users },
+                { path:"roles", component:Roles },
+            ]
+        },
         { name: "login",path: "/login",component: Login},
         {path: "/",redirect:"/login"}
     ]

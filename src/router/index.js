@@ -6,7 +6,7 @@ import Welcome from "@/pages/Home/Welcome/Welcome";
 import Users from "@/pages/Home/Users/Users";
 import Roles from "@/pages/Home/Roles/Roles";
 import Rights from "@/pages/Home/Rights/Rights";
-
+import GoodCategory from "@/pages/Home/GoodCategory/GoodCategory";
 
 import store from "@/vuex/store";
 
@@ -22,6 +22,7 @@ let router = new VueRouter({
                 { path:"users", component:Users },
                 { path:"roles", component:Roles },
                 { path:"rights", component:Rights },
+                { path:"categories", component:GoodCategory },
             ]
         },
         { name: "login",path: "/login",component: Login},

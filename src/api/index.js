@@ -53,3 +53,12 @@ export  const  reqRoleRight = (roleId,rights) =>ajax.post(`roles/${roleId}/right
 
 //分配用户角色
 export  const reqDispatchUserRule = (id,rid) =>ajax.put(`users/${id}/role`,{rid})
+
+//获取所有商品分类列表
+export  const reqGetCateList = (queryInfo={}) => ajax.get('categories',{params:queryInfo})
+//添加分类
+export  const reqAddCate = (params) => ajax({
+    url:"categories",
+    method:"post",
+    data:params
+})

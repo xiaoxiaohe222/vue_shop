@@ -42,7 +42,7 @@
             </template>
             <el-menu-item :key="subNav.id" v-for="subNav in nav.children"
                           :index="subNav.path+''"
-                @click="defaultActive = subNav.path">
+                @click="defaultActive = subNav.path+''">
               <i class="el-icon-menu"></i>
               {{subNav.authName}}
             </el-menu-item>
@@ -81,7 +81,7 @@ export default {
       navList:[] ,  //左侧导航区域的列表数据
       navIcons:['el-icon-s-custom','el-icon-s-ticket','el-icon-s-goods','el-icon-s-order','el-icon-pie-chart'],
       isCollapse:false,  //左侧区域是否 折叠
-      defaultActive:"users" //默认选中的子菜单
+      defaultActive:this.$route.path.split("/")[2]//默认选中的子菜单
     }
   },
   methods: {
@@ -92,6 +92,8 @@ export default {
     }
   },
   async mounted() {
+
+
      const result = await  this.$API.reqNavList()
     if (result.meta.status === 200){
       this.navList = result.data

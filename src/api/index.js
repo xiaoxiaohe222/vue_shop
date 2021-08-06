@@ -42,3 +42,14 @@ export const reqUserById = (id) => ajax(`users/${id}`)
 
 //根据id删除用户
 export  const reqDelUserById = (id) => ajax.delete(`users/${id}`)
+//获取所有权限列表
+export  const reqGetRights = (type) =>ajax.get(`rights/${type}`)
+
+//获取所有角色列表区域
+export  const reqGetRoles = () => ajax.get('roles')
+
+//进行角色授权
+export  const  reqRoleRight = (roleId,rights) =>ajax.post(`roles/${roleId}/rights`,{rids:rights.join()})
+
+//分配用户角色
+export  const reqDispatchUserRule = (id,rid) =>ajax.put(`users/${id}/role`,{rid})

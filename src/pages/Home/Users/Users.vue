@@ -45,8 +45,8 @@
           <template v-slot="scope">
             <el-button @click="updateUser(scope.row)" type="primary" icon="el-icon-edit" size="mini"></el-button>
             <el-button type="danger" @click="openDel(scope.row.id)" icon="el-icon-delete" size="mini"></el-button>
-            <el-tooltip :enterable="false" effect="dark" content="设置重置" placement="top">
-              <el-button type="danger" icon="el-icon-setting" size="mini"></el-button>
+            <el-tooltip :enterable="false" effect="dark" content="分配角色" placement="top">
+              <el-button @click="dispatchRoles(scope.row)" type="danger" icon="el-icon-setting" size="mini"></el-button>
             </el-tooltip>
           </template>
 
@@ -125,7 +125,31 @@
   </span>
     </el-dialog>
 
+<!--分配角色弹出区域-->
+    <el-dialog
+        style="font-size: 12px"
+        title="分配角色"
+        :visible.sync="isDispatchRoles"
+        width="30%"
+        >
+      <p>当前的用户: {{currentUser.username}}</p>
+      <p style="margin: 10px 0">当前的角色: {{currentUser.role_name}}</p>
+      <p>分配新角色:
+        <el-select v-model="selectedId" placeholder="请选择">
+          <el-option
+              v-for="item in rolesList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id">
+          </el-option>
+        </el-select>
+      </p>
+      <span slot="footer" >
 
+    <el-button @click="isDispatchRoles = false">取 消</el-button>
+    <el-button type="primary" @click="toConfirmDispatchUserRole">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -186,14 +210,46 @@ export default {
         ]
       },
       updateUserVisible: false,
-      updateUserForm: {}
-
+      updateUserForm: {},
+      isDispatchRoles:false,
+      currentUser:{},
+      rolesList:[],
+      selectedId:""
     }
   },
   mounted() {
     this.getUsers()
   },
   methods: {
+
+    toConfirmDispatchUserRole(){
+
+      this.$confirm('此操作将永久保存, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+      const result = await  this.$API.reqDispatchUserRule(this.currentUser.id,this.selectedId)
+        if (result.meta.status === 200){
+          this.$message({
+            type: 'success',
+            message: '保存成功!'
+          });
+        }else {
+          this.$message.error(result.meta.msg)
+        }
+        this.selectedId = ""
+        this.isDispatchRoles=false
+        this.getUsers()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        });
+      });
+
+    },
+
     async getUsers() { //获取所有用户列表
       const result = await this.$API.reqUsers(this.queryInfo)
       if (result.meta.status !== 200) {
@@ -297,6 +353,21 @@ export default {
           message: '已取消删除'
         });
       });
+    },
+    //分配角色
+   async dispatchRoles(currentUser){
+
+
+     this.currentUser = currentUser
+
+    const result =await  this.$API.reqGetRoles()
+     if (result.meta.status===200){
+       this.rolesList = result.data
+     }
+
+
+     this.isDispatchRoles = true;
+
     }
 
   }

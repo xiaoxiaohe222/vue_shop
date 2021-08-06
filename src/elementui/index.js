@@ -24,7 +24,11 @@ import {
     Dialog,
     Form,
     FormItem,
-    MessageBox
+    MessageBox,
+    Tag,
+    Tree,
+    Select,
+    Option
 
 } from "element-ui"
 import Vue from "vue"
@@ -32,6 +36,10 @@ import Vue from "vue"
 
 Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;
+Vue.use(Option)
+Vue.use(Select)
+Vue.use(Tree)
+Vue.use(Tag)
 Vue.use(FormItem)
 Vue.use(Form)
 Vue.use(Dialog)
